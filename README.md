@@ -5,4 +5,6 @@ Here is just a way for a quick check.
 
 ```wget -qO- https://github.com/MachoDrone/PCIeCheck/raw/main/PCIeCheck.sh | bash```
 
-https://github.com/MachoDrone/PCIeCheck/tree/main
+(z1-PCIeCheck.png)
+
+(z2-PCIeCheck.png)
