@@ -5,6 +5,6 @@ Here is just a way for a quick check.
 
 ```wget -qO- https://github.com/MachoDrone/PCIeCheck/raw/main/PCIeCheck.sh | bash```
 
-(z1-PCIeCheck.png)
+![Screenshot](z1-PCIeCheck.png)
 
-(z2-PCIeCheck.png)
+![Screenshot](z2-PCIeCheck.png)
