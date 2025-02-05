@@ -86,7 +86,8 @@ for i in {0..7}; do
 
         # Extract PCIe speed and width
         pcie_speed=\$(lspci -vv -s \$(nvidia-smi -i \$i --query-gpu=pci.bus_id --format=csv,noheader) | grep -i "LnkSta:" | awk -F'Speed |GT/s' '{print \$2}' | awk '{if(\$1==2.5)print "1.0";else if(\$1==5.0)print "2.0";else if(\$1==8.0)print "3.0";else if(\$1==16.0)print "4.0";else if(\$1==32.0)print "5.0";else print "Unknown"}')
-        pcie_width=\$(lspci -vv -s \$(nvidia-smi -i \$i --query-gpu=pci.bus_id --format=csv,noheader) | grep -i "LnkSta:" | awk '{print \$3}' | cut -d'x' -f2 | sed 's/GT\/s,//')
+        pcie_width=\$(lspci -vv -s \$(nvidia-smi -i \$i --query-gpu=pci.bus_id --format=csv,noheader) | grep -i "LnkSta:" | sed -n 's/.*Width x\([0-9]\+\).*/\1/p')
+
         # Format pcie_width for display
         formatted_width="x\$pcie_width"
         if [ \${#pcie_width} -eq 1 ]; then
@@ -111,7 +112,7 @@ for i in {0..7}; do
         nvidia-smi -i \$i -rgc &> /dev/null
         nvidia-smi -i \$i -rmc &> /dev/null
         nvidia-smi -i \$i -pm 0 &> /dev/null
-    fi  # Removed the else clause for "GPU looking..."
+    fi
 done
 
 # Check for PCIe 1.0 to 5.0 slot for GPU
@@ -146,7 +147,6 @@ determine_pcie_support() {
     elif [[ $cpu_model =~ "13th Gen Intel(R) Core(TM)" ]]; then
         echo -e "\033[34mCPU Compatibility: Intel 13th Gen Core processors support PCIe 5.0"
         cpu_pcie_version="5.0"
-    # ... (rest of your CPU checks here)
     else
         echo -e "\033[34mCPU Compatibility: CPU model not recognized for PCIe support."
         cpu_pcie_version="Unknown"
